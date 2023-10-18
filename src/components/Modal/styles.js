@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Overlay = styled.div`
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   padding: 0 8px;
@@ -22,7 +22,7 @@ export const Container = styled.div`
   background: #fff;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.04);
 
-  h1 {
+  > h1 {
     margin-bottom: 8px;
     font-size: 22px;
     color: ${({ theme, danger }) => (
@@ -30,22 +30,26 @@ export const Container = styled.div`
   )};
   }
 
-  footer {
+  .modal-body {
     margin-top: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    .cancel-button {
-      background: transparent;
-      border: none;
-      font-size: 16px;
-      margin-right: 8px;
-      color: ${({ theme }) => theme.colors.gray[200]};
-    }
   }
 `;
 
 export const Footer = styled.footer`
+  margin-top: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 
+  .cancel-button {
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    margin-right: 24px;
+    color: ${({ theme }) => theme.colors.gray[200]};
+
+    &[disabled] {
+      cursor: not-allowed;
+    }
+  }
 `;

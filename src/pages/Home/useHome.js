@@ -16,11 +16,6 @@ export default function useHome() {
   const [contactBeingDeleted, setContactBeingDeleted] = useState(null);
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
 
-  // eslint-disable-next-line no-nested-ternary
-  const headerJustifyContent = hasError
-    ? 'flex-end'
-    : contacts.length ? 'space-between' : 'center';
-
   const filteredContacts = useMemo(() => contacts.filter((contact) => (
     contact.name.toLowerCase().includes(searchTerm.toLowerCase())
   )), [contacts, searchTerm]);
@@ -107,6 +102,5 @@ export default function useHome() {
     orderBy,
     handleToggleOrderBy,
     handleDeleteContact,
-    headerJustifyContent,
-  }
+  };
 }

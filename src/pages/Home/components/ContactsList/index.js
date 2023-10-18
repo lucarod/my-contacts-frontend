@@ -15,7 +15,7 @@ export default function ContactsList({
 }) {
   return (
     <>
-      {contacts.length && (
+      {!!contacts.length && (
         <ListHeader orderBy={orderBy}>
           <button type="button" onClick={onToggleOrderBy}>
             <span>Nome</span>

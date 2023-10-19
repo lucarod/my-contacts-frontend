@@ -6,7 +6,9 @@ import checkCircleIcon from '../../../assets/images/icons/check-circle.svg';
 
 import { Container } from './styles';
 
-export default function ToastMessage({ message, onRemoveMessage }) {
+export default function ToastMessage({
+  message, onRemoveMessage, isLeaving, animatedRef,
+}) {
   const {
     id, type, text, duration,
   } = message;
@@ -31,6 +33,8 @@ export default function ToastMessage({ message, onRemoveMessage }) {
       onClick={handleRemoveToast}
       tabIndex={0}
       role="button"
+      isLeaving={isLeaving}
+      ref={animatedRef}
     >
       {type === 'danger' && <img src={xCircleIcon} alt="X" />}
       {type === 'success' && <img src={checkCircleIcon} alt="Check" />}
@@ -47,4 +51,6 @@ ToastMessage.propTypes = {
     duration: PropTypes.number,
   }).isRequired,
   onRemoveMessage: PropTypes.func.isRequired,
+  isLeaving: PropTypes.bool.isRequired,
+  animatedRef: PropTypes.shape().isRequired,
 };

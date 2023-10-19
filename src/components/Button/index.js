@@ -38,6 +38,6 @@ Button.defaultProps = {
   type: 'button',
   disabled: false,
   isLoading: false,
-  danger: PropTypes.bool,
+  danger: false,
   onClick: undefined,
 };

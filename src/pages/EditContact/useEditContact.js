@@ -57,5 +57,7 @@ export default function useEditContact() {
     }
   }
 
-  return { isLoading, contactName, contactFormRef, handleSubmit };
+  return {
+    isLoading, contactName, contactFormRef, handleSubmit,
+  };
 }

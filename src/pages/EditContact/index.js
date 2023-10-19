@@ -9,7 +9,7 @@ export default function EditContact() {
     isLoading,
     contactName,
     contactFormRef,
-    handleSubmit
+    handleSubmit,
   } = useEditContact();
 
   return (

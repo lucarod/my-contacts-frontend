@@ -1,5 +1,5 @@
 import {
-  useState, useEffect, useMemo, useCallback,
+  useState, useEffect, useCallback, useMemo, useDeferredValue,
 } from 'react';
 
 import ContactsService from '../../services/ContactsService';
@@ -9,16 +9,18 @@ import toast from '../../utils/toast';
 export default function useHome() {
   const [contacts, setContacts] = useState([]);
   const [orderBy, setOrderBy] = useState('asc');
-  const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [contactBeingDeleted, setContactBeingDeleted] = useState(null);
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const deferredSearchTerm = useDeferredValue(searchTerm);
 
   const filteredContacts = useMemo(() => contacts.filter((contact) => (
-    contact.name.toLowerCase().includes(searchTerm.toLowerCase())
-  )), [contacts, searchTerm]);
+    contact.name.toLowerCase().includes(deferredSearchTerm.toLowerCase())
+  )), [contacts, deferredSearchTerm]);
 
   const loadContacts = useCallback(async () => {
     try {
@@ -35,22 +37,22 @@ export default function useHome() {
     }
   }, [orderBy]);
 
-  function handleToggleOrderBy() {
+  const handleToggleOrderBy = useCallback(() => {
     setOrderBy((prevState) => (prevState === 'asc' ? 'desc' : 'asc'));
-  }
+  }, []);
 
   function handleChangeSearchTerm(event) {
-    setSearchTerm(event.target.value);
+    setSearchTerm(event.targetvalue);
   }
 
   function handleTryAgain() {
     loadContacts();
   }
 
-  function handleDeleteContact(contact) {
+  const handleDeleteContact = useCallback((contact) => {
     setIsDeleteModalVisible(true);
     setContactBeingDeleted(contact);
-  }
+  }, []);
 
   function handleCloseDeleteModal() {
     setIsDeleteModalVisible(false);

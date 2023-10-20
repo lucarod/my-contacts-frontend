@@ -24,5 +24,5 @@ export default function useNewContact() {
     }
   }
 
-  return { contactFormRef, handleSubmit }
+  return { contactFormRef, handleSubmit };
 }

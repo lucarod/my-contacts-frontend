@@ -45,7 +45,7 @@ export default function useAnimatedList(initialValue = []) {
   ), [items, pendingRemovalItemsIds, getAnimatedRef]);
 
   useEffect(() => {
-    pendingRemovalItemsIds.forEach((itemId) => {
+    pendingRemovalItemsIds?.forEach((itemId) => {
       const animatedRef = animatedRefs.current.get(itemId);
       const animatedElement = animatedRef?.current;
       const alreadyHasListener = animationEndListeners.current.has(itemId);
@@ -66,7 +66,7 @@ export default function useAnimatedList(initialValue = []) {
     const removeListeners = animationEndListeners.current;
 
     return () => {
-      removeListeners.current.forEach((removeListener) => removeListener());
+      removeListeners.current?.forEach((removeListener) => removeListener());
     };
   }, []);
 

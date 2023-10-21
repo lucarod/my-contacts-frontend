@@ -16,16 +16,25 @@ export default function useEditContact() {
   const runSafeAsyncAction = useSafeAsyncAction();
 
   useEffect(() => {
+    const controller = new AbortController();
+
     async function loadContact() {
       try {
-        const contact = await ContactsService.getContactById(id);
+        const contact = await ContactsService.getContactById(
+          id,
+          controller.signal,
+        );
 
         runSafeAsyncAction(() => {
           contactFormRef.current.setFieldsValues(contact);
           setIsLoading(false);
           setContactName(contact.name);
         });
-      } catch {
+      } catch (error) {
+        if (error instanceof DOMException && error.name === 'AbortError') {
+          return;
+        }
+
         runSafeAsyncAction(() => {
           history.push('/');
           toast({
@@ -37,6 +46,10 @@ export default function useEditContact() {
     }
 
     loadContact();
+
+    return () => {
+      controller.abort();
+    };
   }, [id, history, runSafeAsyncAction]);
 
   async function handleSubmit(contact) {
